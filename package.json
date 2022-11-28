@@ -1,0 +1,15 @@
+{
+  "name": "ethlogstesting",
+  "version": "1.0.0",
+  "description": "an Ethereum block scraper, crawler, trawler and data harvester",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "immaxkent",
+  "license": "MIT",
+  "dependencies": {
+    "alchemy-sdk": "^2.2.3"
+  }
+}
