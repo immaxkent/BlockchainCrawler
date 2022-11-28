@@ -2,12 +2,7 @@ const fs = require("fs");
 
 const dataPath = "./lastDataDrop.json";
 
-/*
-here, write whichever logic you wish to be 
-applied to the data held in the dataPath file.
-*/
-
-const sortData = () => {
+const orderLeaderBoard = () => {
     let entries = fs.readFileSync(dataPath);
 
     for (attempt of entries) {
@@ -17,4 +12,4 @@ const sortData = () => {
     }
 }
 
-sortData();
+orderLeaderBoard();

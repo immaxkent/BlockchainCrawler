@@ -1,11 +1,10 @@
-
 const fs = require("fs");
 const { Network, Alchemy, Utils } = require("alchemy-sdk");
 
-const apiKey = "<DROP_YOUR_API_KEY_HERE>";
+const apiKey = "2A-1DH2kKKB-rNj3Bjgm8yz3clAn6bgp";
 const settings = {
   apiKey: apiKey,
-  network: Network.ETH_GOERLI, //or whichever network you want to use
+  network: Network.ETH_GOERLI,
 };
 
 const dataPath = "./lastDataDrop.json";
@@ -13,30 +12,28 @@ const dataPath = "./lastDataDrop.json";
 const alchemy = new Alchemy(settings);
 
 const retreiveData = async () => {
-  /*
-  you don't need to do just getLogs - you can use a plethora of calls from alchemy. 
-  See the docs and more here https://docs.alchemy.com/
-  */
   let logs = await alchemy.core.getLogs({
-    fromBlock: "latest",
-    toBlock: "pending",
-    address: "vitalik.eth",
+    fromBlock: "0x799881",
+    toBlock: "0x799c69",
+// the true value for from and to are 0x72fac0 and 0x799885 respectively
+    address: "0x42E7014a9D1f6765e76fA2e69532d808F2fe27E3",
+//this ^^ is the old ethernaut address. The new one is 0xD2e5e0102E55a5234379DD796b8c641cd5996Efd
     topics: [
-        //list your topics here
+        //"0x7bf7f1ed7f75e83b76de0ff139966989aff81cb85aac26469c18978d86aac1c2"
     ]
     });
-
+    
 const dataDrop = [];
 
     for (log of logs) {
         let txn = await alchemy.core.getTransaction(log.transactionHash);
-        let block = await alchemy.core.getBlock(log.blockNumber);
         try {
              let data = {
-                from: String(txn.from),
-                timeStamp: Number(block.timestamp)
+                player: String(txn.from),
                 /*
-                write your desired data derivations here
+                percentageOfLevelsSolved
+                playerScore
+                ...and other desirable data points
                 */
              };
              dataDrop.push(data);
@@ -58,9 +55,6 @@ const retreiveAndWrite = async () => {
   }
 };
 
-/*
-once your desired data is held in our JSON array dataDrop, 
-you can do whatever you want with it. We call retreiveAndWrite() 
-to write this data into the file specified in dataPath.
-*/
 retreiveAndWrite();
+
+
