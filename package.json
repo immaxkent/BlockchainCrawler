@@ -10,6 +10,7 @@
   "author": "immaxkent",
   "license": "MIT",
   "dependencies": {
-    "alchemy-sdk": "^2.2.3"
+    "alchemy-sdk": "^2.2.3",
+    "web3": "^1.8.1"
   }
 }
