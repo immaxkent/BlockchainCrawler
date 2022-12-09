@@ -1,0 +1,75 @@
+[
+    {
+        "player": "0xB875d543e4eC1E52F8bFc67bed826336A39Cd122",
+        "levels": [
+            {
+                "levelAddress": "0xBA97454449c10a0F04297022646E7750b8954EE8",
+                "isCompleted": false,
+                "timeCreated": 1669480980,
+                "timeSolved": "",
+                "timeTaken": ""
+            },
+            {
+                "levelAddress": "0xBA97454449c10a0F04297022646E7750b8954EE8",
+                "isCompleted": false,
+                "timeCreated": 1669480980,
+                "timeSolved": "not yet solved",
+                "timeTaken": ""
+            },
+            {
+                "levelAddress": "0xBA97454449c10a0F04297022646E7750b8954EE8",
+                "isCompleted": true,
+                "timeCreated": "this is a solved level",
+                "timeSolved": 1669481304,
+                "timeTaken": ""
+            }
+        ],
+        "totalTimeTakenToCompleteLevels": ""
+    },
+    {
+        "player": "0x55B06A25594B366A9B973Fa588bf5FDD9abAfE68",
+        "levels": [
+            {
+                "levelAddress": "0x80934BE6B8B872B364b470Ca30EaAd8AEAC4f63F",
+                "isCompleted": false,
+                "timeCreated": 1669481016,
+                "timeSolved": "not yet solved",
+                "timeTaken": ""
+            }
+        ],
+        "totalTimeTakenToCompleteLevels": 0
+    },
+    {
+        "player": "0xE61a3def0921b2585e60fD870264990646B30B5c",
+        "levels": [
+            {
+                "levelAddress": "0xB4802b28895ec64406e45dB504149bfE79A38A57",
+                "isCompleted": true,
+                "timeCreated": "this is a solved level",
+                "timeSolved": 1669481064,
+                "timeTaken": ""
+            },
+            {
+                "levelAddress": "0xF781b45d11A37c51aabBa1197B61e6397aDf1f78",
+                "isCompleted": false,
+                "timeCreated": 1669481208,
+                "timeSolved": "not yet solved",
+                "timeTaken": ""
+            }
+        ],
+        "totalTimeTakenToCompleteLevels": 0
+    },
+    {
+        "player": "0xc59dFC955c26493c3E5Ac068A308CB787CCE34e6",
+        "levels": [
+            {
+                "levelAddress": "0x80934BE6B8B872B364b470Ca30EaAd8AEAC4f63F",
+                "isCompleted": false,
+                "timeCreated": 1669481364,
+                "timeSolved": "not yet solved",
+                "timeTaken": ""
+            }
+        ],
+        "totalTimeTakenToCompleteLevels": 0
+    }
+]
