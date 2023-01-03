@@ -9,9 +9,11 @@ const writeLeaderBoard = require("./writeLeaderBoard.js");
 const fs = require("fs");
 
 const generateAllBoards = async () => {
-  // for (network of networks) {
-  //   await generateNetworkBoard(network);
-  // }
+  for (network of networks) {
+    if (network.name == "Arbitrum") {
+      await generateNetworkBoard(network);
+    }
+  }
 
   compileAllPlayersBoard(networks);
   console.log(
