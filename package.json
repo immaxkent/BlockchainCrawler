@@ -4,7 +4,7 @@
   "description": "an Ethereum block scraper, crawler, trawler and data harvester",
   "main": "scraper.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "immaxkent",
@@ -12,6 +12,8 @@
   "dependencies": {
     "alchemy-sdk": "^2.2.3",
     "web3": "^1.8.1"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
   }
-
 }

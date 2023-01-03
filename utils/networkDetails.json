@@ -1,67 +1,67 @@
 [
-    {
-        "name": "Goerli",
-        "networkDecleration": "Network.eth-goerli",
-        "API_Key" : "2A-1DH2kKKB-rNj3Bjgm8yz3clAn6bgp",
-        "oldAddress": "0x42E7014a9D1f6765e76fA2e69532d808F2fe27E3",
-        "newAddress": "0xD2e5e0102E55a5234379DD796b8c641cd5996Efd",
-        "fromBlock": 7635000,
-        "switchoverBlock": 7968901,
-        "toBlock": 8100000
-        
-    },
-    {
-        "name": "Optimism",
-        "capsName": "Network.opt-goerli",
-        "API_Key" : "Gd0ds1dzd9s0PrPQpeme8Uyz-OpdG6XE",
-        "oldAddress": "0xDCa6065818935c33D6AF9AbDB7d5f679BB43508A",
-        "newAddress": "0xB4802b28895ec64406e45dB504149bfE79A38A57",
-        "fromBlock": "1888074",
-        "switchOverBlock": "2750524",
-        "toBlock": "latest"
-        
-    },
-    {
-        "name": "Mumbai",
-        "capsName": "MUMBAI",
-        "API_Key" : "",
-        "oldAddress": "0xe04f955e4Cf9858F8f8d60C09aBf16DF23D4672b",
-        "newAddress": "0x73379d8B82Fda494ee59555f333DF7D44483fD58",
-        "fromBlock": "28218131",
-        "switchOverBlock": "29198563",
-        "toBlock": "latest"
-        
-    },
-    {
-        "name": "Arbitrum",
-        "capsName": "Network.arb-goerli",
-        "API_Key" : "",
-        "oldAddress": "0xD991431D8b033ddCb84dAD257f4821E9d5b38C33",
-        "newAddress": "0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6",
-        "fromBlock": "635119",
-        "switchOverBlock": "1375826",
-        "toBlock": "latest"
-        
-    },
-    {
-        "name": "Sepolia",
-        "capsName": "Network.SEPOLIA",
-        "API_Key" : "",
-        "oldAddress": "0xD991431D8b033ddCb84dAD257f4821E9d5b38C33",
-        "newAddress": "0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6",
-        "fromBlock": "2033550",
-        "switchOverBlock": "2306395",
-        "toBlock": "latest"
-    },
-    {
-        "name": "Local",
-        "networkDecleration": "Network.eth-goerli",
-        "API_Key" : "2A-1DH2kKKB-rNj3Bjgm8yz3clAn6bgp",
-        "oldAddress": "0x42E7014a9D1f6765e76fA2e69532d808F2fe27E3",
-        "newAddress": "0xD2e5e0102E55a5234379DD796b8c641cd5996Efd",
-        "fromBlock": 0,
-        "switchoverBlock": 0,
-        "toBlock": 0
-        
-    }
+  {
+    "name": "Goerli",
+    "networkDecleration": "Network.eth-goerli",
+    "API_Key": "",
+    "oldAddress": "0x42E7014a9D1f6765e76fA2e69532d808F2fe27E3",
+    "newAddress": "0xD2e5e0102E55a5234379DD796b8c641cd5996Efd",
+    "fromBlock": 7535901,
+    "switchoverBlock": 7968901,
+    "toBlock": 8214762,
+    "lastFrom": 8214763,
+    "nextTo": 8221963,
+    "statisticsAddress": ""
+  },
+  {
+    "name": "Mumbai",
+    "networkDecleration": "Network.polygon-mumbai",
+    "API_Key": "",
+    "oldAddress": "0xe04f955e4Cf9858F8f8d60C09aBf16DF23D4672b",
+    "newAddress": "0x73379d8B82Fda494ee59555f333DF7D44483fD58",
+    "fromBlock": 28218131,
+    "switchoverBlock": 29198563,
+    "toBlock": 30249171,
+    "lastFrom": 30249172,
+    "nextTo": 30256372,
+    "statisticsAddress": ""
+  },
+  {
+    "name": "Arbitrum",
+    "networkDecleration": "Network.arb-goerli",
+    "API_Key": "",
+    "oldAddress": "0xD991431D8b033ddCb84dAD257f4821E9d5b38C33",
+    "newAddress": "0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6",
+    "fromBlock": 635119,
+    "switchoverBlock": 1375826,
+    "toBlock": 3661699,
+    "lastFrom": 3661700,
+    "nextTo": 3668900,
+    "statisticsAddress": ""
+  },
+  {
+    "name": "Sepolia",
+    "networkDecleration": "Network.SEPOLIA",
+    "API_Key": "",
+    "oldAddress": "0xD991431D8b033ddCb84dAD257f4821E9d5b38C33",
+    "newAddress": "0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6",
+    "fromBlock": 2033550,
+    "switchoverBlock": 2306395,
+    "toBlock": 2569443,
+    "lastFrom": 2569444,
+    "nextTo": 2576643,
+    "statisticsAddress": ""
+  },
+  {
+    "name": "Optimism",
+    "networkDecleration": "Network.opt-goerli",
+    "API_Key": "",
+    "oldAddress": "0xDCa6065818935c33D6AF9AbDB7d5f679BB43508A",
+    "newAddress": "0xB4802b28895ec64406e45dB504149bfE79A38A57",
+    "fromBlock": 1888074,
+    "switchoverBlock": 2750524,
+    "toBlock": 3783655,
+    "lastFrom": 3783656,
+    "nextTo": 3790855,
+    "statisticsAddress": ""
+  }
 ]
