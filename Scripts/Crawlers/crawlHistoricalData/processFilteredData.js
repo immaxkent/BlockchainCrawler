@@ -93,8 +93,7 @@ const processFilteredData = (filteredData) => {
       };
 
       processedData.push(newProcessedEntry);
-      console.log("newProcessedEntry written ");
-      console.log(processedData);
+      console.log("newProcessedEntry written");
     }
   });
 
