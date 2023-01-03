@@ -1,4 +1,5 @@
 const leaderBoardPath = "../../../Boards/leaderBoard.json";
+const testBoardPath = "../../../Boards/testBoard.json";
 
 const updateLeaderBoard = (dataDrop) => {
   const lastVersionOfLeaderBoard = JSON.parse(fs.readFileSync(leaderBoardPath));
@@ -17,7 +18,7 @@ const updateLeaderBoard = (dataDrop) => {
     }
   });
 
-  fs.writeFileSync(leaderBoardPath, JSON.stringify(lastVersionOfLeaderBoard));
+  fs.writeFileSync(testBoardPath, JSON.stringify(lastVersionOfLeaderBoard));
 };
 
 module.exports = updateLeaderBoard;

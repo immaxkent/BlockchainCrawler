@@ -43,8 +43,7 @@ const compileAllPlayersBoard = (networks) => {
     const networkBoardWithTotals = calculateTimeAndScores(networkBoard);
     console.log("networkBoard", networkBoardWithTotals);
     networkBoardWithTotals.forEach((profile) => {
-      if (profile.totalNumberOfLevelsCompleted >= 0) {
-        console.log("pushing profile", profile);
+      if (profile.totalNumberOfLevelsCompleted > 1) {
         allPlayers.push(profile);
       }
     });

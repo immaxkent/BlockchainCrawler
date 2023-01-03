@@ -1,7 +1,12 @@
-name: "crawl for new Ethenraut leaders!"
+name: "crawl for new Ethernaut leaders!"
 on:
   schedule:
+    # Runs every 12 hours
     - cron: "0 12 * * *"
 
 jobs:
-  run: node ./Scripts/Crawlers/crawlNewData/index.js
+  crawl:
+    name: Crawl For New Data
+    runs-on: ubuntu-latest
+    steps:
+      - run: node "./Scripts/Crawlers/crawlNewData/index.js"
