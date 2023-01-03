@@ -34,7 +34,6 @@ const filterLogs = async (
           mappingDataPath
         ),
       };
-      // console.log("filteredLog", filteredLog);
       console.log("filteredLog.level", filteredLog.level, log.blockNumber);
       filteredData.push(filteredLog);
     } catch (error) {

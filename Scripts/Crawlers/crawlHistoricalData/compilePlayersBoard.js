@@ -15,14 +15,13 @@ const calculateTimeAndScores = (processedData) =>
       0
     );
 
-    const totalNumberOfEthernautLevels = 27;
-
+    const totalNumberOfEthernautLevels = 28;
     let score = 0;
     if (levelCompletedCounter) {
       score =
         100 *
         ((0.9 * levelCompletedCounter) / totalNumberOfEthernautLevels +
-          (12 * levelCompletedCounter) / totalTimeTakenToCompleteLevels);
+          (15 * levelCompletedCounter) / totalTimeTakenToCompleteLevels);
     }
     return {
       player: profile.player,
