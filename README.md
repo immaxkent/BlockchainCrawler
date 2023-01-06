@@ -1,6 +1,6 @@
-# blockScraper
+# Blockchain Crawler
 
-A simple trawler for finding, decoding and writing datas from logs on Ethereum chains running official versions of Open Zeppelin's Ethernaut.
+A simple trawler, crawler, and general miscrient for finding, decoding and writing datas from logs on Ethereum chains running official versions of Open Zeppelin's Ethernaut.
 
 Completed using Alchemy.
 
