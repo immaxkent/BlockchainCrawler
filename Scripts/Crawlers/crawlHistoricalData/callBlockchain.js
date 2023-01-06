@@ -5,7 +5,8 @@ const callBlockChain = async (
   nodeProvider,
   fromBlock,
   toBlock,
-  switchoverBlock
+  switchoverBlock,
+  log
 ) => {
   let logs = [];
   const incrementer = 2000;

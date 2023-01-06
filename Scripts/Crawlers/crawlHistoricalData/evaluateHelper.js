@@ -65,8 +65,47 @@ const returnCurrentLevel = (
   return result;
 };
 
+const evaluatePlayerScore = (
+  totalTimeTakenToCompleteLevels,
+  totalNumberOfLevelsCompleted
+) => {
+  const totalNumberOfEthernautLevels = evaluateCurrentNumberOfEthernautLevels();
+  let score = 0;
+  if (totalNumberOfLevelsCompleted) {
+    score =
+      100 *
+      ((0.9 * totalNumberOfLevelsCompleted) / totalNumberOfEthernautLevels +
+        (15 * totalNumberOfLevelsCompleted) / totalTimeTakenToCompleteLevels);
+  }
+  return score;
+};
+
+const evaluateNewPlayerScore = (
+  averageTimeTakenToCompleteALevel,
+  totalNumberOfLevelsCompleted
+) => {
+  const totalNumberOfEthernautLevels = evaluateCurrentNumberOfEthernautLevels();
+  let score = 0;
+  if (totalNumberOfLevelsCompleted) {
+    score =
+      100 *
+      ((0.9 * totalNumberOfLevelsCompleted) / totalNumberOfEthernautLevels +
+        (15 * totalNumberOfLevelsCompleted) /
+          (averageTimeTakenToCompleteALevel * totalNumberOfLevelsCompleted));
+  }
+  return score;
+};
+
+const evaluateCurrentNumberOfEthernautLevels = () => {
+  const ethernautLevels = require("../../../utils/ethernautLevels.json");
+  return ethernautLevels.length;
+};
+
 module.exports = {
   evaluateCurrentSolveInstanceHex,
   evaluateIfWeHavePassedReDeployment,
   returnCurrentLevel,
+  evaluatePlayerScore,
+  evaluateNewPlayerScore,
+  evaluateCurrentNumberOfEthernautLevels,
 };

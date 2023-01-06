@@ -1,24 +1,24 @@
+const fs = require("fs");
 const leaderBoardPath = "../../../Boards/leaderBoard.json";
+const leaderBoard = require(leaderBoardPath);
+const newPlayersBoard = require("../../../Boards/newPlayersBoard.json");
 const testBoardPath = "../../../Boards/testBoard.json";
 
-const updateLeaderBoard = (dataDrop) => {
-  const lastVersionOfLeaderBoard = JSON.parse(fs.readFileSync(leaderBoardPath));
-
-  dataDrop.forEach((profile) => {
-    if (lastVersionOfLeaderBoard.find((p) => p.player === profile.player)) {
-      const index = lastVersionOfLeaderBoard.findIndex(
-        (p) => p.player === profile.player
-      );
-      lastVersionOfLeaderBoard[index] = profile;
+const updateLeaderBoard = () => {
+  newPlayersBoard.forEach((profile) => {
+    const index = leaderBoard.findIndex((p) => p.player === profile.player);
+    if (index !== -1) {
+      leaderBoard[index] = profile;
     } else {
-      const index = lastVersionOfLeaderBoard.findIndex(
-        (p) => p.playerScore === profile.playerScore
-      );
-      lastVersionOfLeaderBoard.splice(index, 0, profile);
+      leaderBoard.push(profile);
     }
   });
 
-  fs.writeFileSync(testBoardPath, JSON.stringify(lastVersionOfLeaderBoard));
+  const sortedLeaderboard = leaderBoard.sort((a, b) => {
+    return b.playerScore - a.playerScore;
+  });
+
+  fs.writeFileSync(testBoardPath, JSON.stringify(sortedLeaderboard));
 };
 
 module.exports = updateLeaderBoard;
