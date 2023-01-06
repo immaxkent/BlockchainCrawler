@@ -40,6 +40,7 @@ Here's how that process would go:
 
 Here's some things that needs to be changed from development in local to production deployment:
 
-- access to ethernautLevels / gamedata
-- access to each network's levels mapping
-- return of current number of ethernaut levels
+- access to ethernautLevels / gamedata <mapLevels, >
+- access to each network's levels mapping <>
+- return of current number of ethernaut levels <crawlNewData, crawlHistoricalData>
+- incorporate 'recalculateScores' functionality

@@ -5,10 +5,9 @@ const networks = require("../utils/networkDetails.json");
 const createDifficultyMaps = () => {
   for (network of networks) {
     const difficultyMapPath = `../Networks/${network.name}/difficultyMap${network.name}.json`;
-    const archaicNetworkMap = mapLevels(network);
+    const difficultyMap = mapLevels(network);
+    fs.writeFileSync(difficultyMapPath, JSON.stringify(difficultyMap));
   }
-
-  //fs.writeFileSync(difficultyMapPath, difficultyMap);
 };
 
 const mapLevels = (network) => {
@@ -24,17 +23,18 @@ const mapLevels = (network) => {
     } catch (error) {}
   });
 
-  levelsArray = require(`../../Networks/${network.name}/levelsMapping.json`);
+  levelsAddressObject = require(`../Networks/${network.name}/levelsObject.json`);
 
-  nameData.forEach((level) => {
-    levelsArray.forEach((levelAddress) => {
-      if (level.name === levelAddress.name) {
-        level.address = levelAddress.address;
-      }
-    });
+  const levelsData = nameData.map((level, index) => {
+    return {
+      ...level,
+      address: levelsAddressObject[index],
+    };
   });
 
-  return nameData;
+  console.log(levelsData);
+
+  return levelsData;
 };
 
 createDifficultyMaps();
