@@ -2,24 +2,26 @@ const callBlockChain = require("./callBlockchain.js");
 const filterLogs = require("./filterLogs.js");
 const processFilteredData = require("./processFilteredData.js");
 const initialiseNodeProvider = require("./initialiseNodeProvider.js");
-const Web3 = require("web3");
-const networks = require("../../../utils/networkDetails.json");
 const compileAllPlayersBoard = require("./compilePlayersBoard.js");
 const writeLeaderBoard = require("./writeLeaderBoard.js");
 const consoleCustomiser = require("../../../utils/consoleCustomiser");
-const fs = require("fs");
 const { log } = consoleCustomiser({ delay: 100, randomized: true });
+const Web3 = require("web3");
+const networks = require("../../../utils/networkDetails.json");
+const fs = require("fs");
 
 const generateAllBoards = async () => {
   for (network of networks) {
-    await generateNetworkBoard(network, log);
+    if (network.name == "Mumbai" /**28218131 is the actual from block */) {
+      await generateNetworkBoard(network, log);
+    }
   }
 
-  compileAllPlayersBoard(networks);
-  await log(
-    "prised be! the players played the players game and got written on the #allPlayersBoard. right on!"
-  );
-  writeLeaderBoard();
+  // compileAllPlayersBoard(networks);
+  // await log(
+  //   "prised be! the players played the players game and got written on the #allPlayersBoard. right on!"
+  // );
+  // writeLeaderBoard();
 };
 
 const generateNetworkBoard = async (network, log) => {

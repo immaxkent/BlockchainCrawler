@@ -7,13 +7,13 @@ const updateLeaderBoard = require("./updateLeaderBoard.js");
 const fetchAndAddAliases = require("./fetchAndAddAliases.js");
 const consoleCustomiser = require("../../../utils/consoleCustomiser");
 const web3 = new Web3();
-const { log } = consoleCustomiser({ delay: 100, randomized: true });
+const { log } = consoleCustomiser({ delay: 50, randomized: true });
 
-const fetchNewDataAndUpdateLeaderBoard = async (networks) => {
+const fetchNewDataAndUpdateLeaderBoard = async () => {
   for (network of networks) {
     await fetchNewData(network, web3, log);
     await log(
-      `Trumpets, glory and resounding success! ${network.name} was crawled with valor.`
+      `Trumpets, glory and resounding success! ${network.name} was crawled like a 19th century garter!`
     );
   }
   await log(
@@ -23,7 +23,12 @@ const fetchNewDataAndUpdateLeaderBoard = async (networks) => {
   await log(
     ".........deck the halls, ya filthy animal! The Leader Board has been.... UPDATED"
   );
-  //fetchAndAddAliases();
+  // fetchAndAddAliases();
+  // await log(
+  //   "get your magnifying glass out, Sherlock, because within, the writ belies the ALIASES!"
+  // );
 };
 
-fetchNewDataAndUpdateLeaderBoard(networks);
+fetchNewDataAndUpdateLeaderBoard();
+
+module.exports = fetchNewDataAndUpdateLeaderBoard;

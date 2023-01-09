@@ -1,4 +1,4 @@
-const consoleCustomiser = ({ delay = 100, randomized }) => {
+const consoleCustomiser = ({ delay, randomized }) => {
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };

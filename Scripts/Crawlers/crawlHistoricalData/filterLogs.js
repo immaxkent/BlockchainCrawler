@@ -20,7 +20,10 @@ const filterLogs = async (
         player: String(txn.from),
         eventType:
           String(log.topics[0]) ===
-          evaluateCurrentSolveInstanceHex(fromBlock, switchoverBlock)
+          evaluateCurrentSolveInstanceHex(
+            /*fromBlock*/ log.blockNumber,
+            switchoverBlock
+          )
             ? "LevelCompleted"
             : "InstanceCreated",
         blockNumber: log.blockNumber,

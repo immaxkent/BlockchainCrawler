@@ -1,4 +1,5 @@
 const fs = require("fs");
+const networks = require("../../../utils/networkDetails.json");
 
 const oldSolveInstanceHex =
   "0x9dfdf7e3e630f506a3dfe38cdbe34e196353364235df33e5a3b588488d9a1e78";
@@ -16,6 +17,7 @@ const evaluateCurrentSolveInstanceHex = (check, switchoverBlock) => {
   } else {
     solveInstanceHex = newSolveInstanceHex;
   }
+  console.log(solveInstanceHex);
   return solveInstanceHex;
 };
 
@@ -101,6 +103,28 @@ const evaluateCurrentNumberOfEthernautLevels = () => {
   return ethernautLevels.length;
 };
 
+const evaluateTotalDifficultyFaced = (playerProfile, network) => {
+  levelsArray = playerProfile.levels;
+  let difficultyCount = 0;
+  const difficultyMap = require(`../../../Networks/${network.name}/difficultyMap${network.name}.json`);
+
+  levelsArray.forEach((level) => {
+    const thisDifficultyProfile = difficultyMap.find(
+      l,
+      level.address == l.address
+    );
+    difficultyCount += thisDifficultyProfile.difficulty;
+  });
+
+  return difficultyCount;
+
+  // levelsArray.forEach((level) => {
+  //   difficultyMap.find((l) => level.levelAddress == difficultyMap.address) {
+  //     difficultyCount += l.difficulty
+  //   }
+  // });
+};
+
 module.exports = {
   evaluateCurrentSolveInstanceHex,
   evaluateIfWeHavePassedReDeployment,
@@ -108,4 +132,5 @@ module.exports = {
   evaluatePlayerScore,
   evaluateNewPlayerScore,
   evaluateCurrentNumberOfEthernautLevels,
+  evaluateTotalDifficultyFaced,
 };
