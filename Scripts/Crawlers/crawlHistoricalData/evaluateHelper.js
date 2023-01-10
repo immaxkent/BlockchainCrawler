@@ -17,7 +17,7 @@ const evaluateCurrentSolveInstanceHex = (check, switchoverBlock) => {
   } else {
     solveInstanceHex = newSolveInstanceHex;
   }
-  console.log(solveInstanceHex);
+  // console.log(solveInstanceHex);
   return solveInstanceHex;
 };
 
@@ -30,14 +30,14 @@ const returnCurrentLevel = (
   mappingData
 ) => {
   let result = "";
-  console.log(
-    "log.blockNumber",
-    log.blockNumber,
-    "switchoverBlock",
-    switchoverBlock
-  );
+  // console.log(
+  //   "log.blockNumber",
+  //   log.blockNumber,
+  //   "switchoverBlock",
+  //   switchoverBlock
+  // );
   if (!evaluateIfWeHavePassedReDeployment(log.blockNumber, switchoverBlock)) {
-    console.log("ive not passed switchover");
+    // console.log("ive not passed switchover");
     let input = txn.data;
     let input_data = "0x" + input.slice(10);
     if (log.topics[0] === oldSolveInstanceHex) {
@@ -54,14 +54,14 @@ const returnCurrentLevel = (
       result = mappingData[decodedAddress];
     }
   } else {
-    console.log("ive passed redeployment", log.topics[3]);
+    // console.log("ive passed redeployment", log.topics[3]);
     const topicsArray = [{ type: "address", name: "level" }];
     const topic0Array = web3.eth.abi.decodeParameters(
       topicsArray,
       String(log.topics[3])
     );
     const newLevelAddress = topic0Array.level;
-    console.log("topic0Array", topic0Array, log.blockNumber);
+    // console.log("topic0Array", topic0Array, log.blockNumber);
     result = newLevelAddress;
   }
   return result;

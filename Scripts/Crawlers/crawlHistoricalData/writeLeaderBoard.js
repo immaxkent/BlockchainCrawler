@@ -1,7 +1,7 @@
 const leaderBoardPath = "../../../Boards/leaderBoard.json";
 const fs = require("fs");
 
-const writeLeaderBoard = () => {
+const writeLeaderBoard = async (log) => {
   const allPlayersBoard = require("../../../allPlayersBoard.json");
   let leaderBoard = [];
 
@@ -10,7 +10,7 @@ const writeLeaderBoard = () => {
   });
 
   fs.writeFileSync(leaderBoardPath, JSON.stringify(leaderBoard));
-  console.log(
+  await log(
     "button up your mittens, because the leaders have come forth! Leader board written from historical data."
   );
 };

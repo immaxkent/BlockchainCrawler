@@ -25,7 +25,7 @@ const fetchNewDataAndUpdateLeaderBoard = async () => {
   );
   // fetchAndAddAliases();
   // await log(
-  //   "get your magnifying glass out, Sherlock, because within, the writ belies the ALIASES!"
+  //   "get your magnifying glass out, Sherlock, because the leader board now belies.... the ALIASES!"
   // );
 };
 
