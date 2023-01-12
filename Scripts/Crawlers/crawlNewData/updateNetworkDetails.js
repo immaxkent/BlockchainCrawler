@@ -1,9 +1,8 @@
 const networkDataPath = "../../../utils/networkDetails.json";
 const fs = require("fs");
-const returnLatestBlock = require("./returnLatestBlock");
 
-const updateNetworkDetails = async (network) => {
-  const upperBlock = await returnLatestBlock(network);
+const updateNetworkDetails = async (network, upperBlock) => {
+  
   const networkDetails = require(networkDataPath);
 
   const updatedNetworkDetails = networkDetails.map((networkDetail) => {

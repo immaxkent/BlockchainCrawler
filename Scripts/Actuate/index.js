@@ -1,31 +1,22 @@
 const refreshEthernautBasedData = require("./refreshEthernautBasedData.js");
-const fetchNewDataAndUpdateLeaderBoard = require("../Crawlers/crawlNewData/index.js");
+const fetchNewDataAndUpdatePlayersBoard = require("../Crawlers/crawlNewData/index.js");
+const writeLeaderBoard = require("./writeLeaderBoard.js");
+const { reCalculateScores } = require("../Tools/evaluateHelper");
+const consoleCustomiser = require("../../utils/consoleCustomiser");
+const { logger } = consoleCustomiser({ delay: 50, randomized: true });
+
 const trigger = () => {
-  /**here, write functions that
-   *
-   * update gameData.json, levels mappings and totalNumberOfEthernautCalls
-   * */
 
   refreshEthernautBasedData();
 
+  fetchNewDataAndUpdatePlayersBoard();
+
+  writeLeaderBoard(logger, reCalculateScores);
   /*
-  now, call the newCrawler to update the leaderboard
+   * the reCalculateScores implementation at this level is needless.
+   * it has been placed here for ease of access when inspecting/modifying
   */
 
-  fetchNewDataAndUpdateLeaderBoard();
-
-  /**NOTE
-   * that the evaluation of player scores shoud be omitted from the current architecture up to and including
-   * fetchNewDataAndUpdateLeaderBoard()
-   *
-   */
-
-  /*
-   *
-   * also, write a script to re-calculate scores as time goes on
-   */
-
-  reCalculateScores();
 };
 
 trigger();

@@ -1,4 +1,4 @@
-const { evaluateIfWeHavePassedReDeployment } = require("./evaluateHelper.js");
+const { evaluateIfWeHavePassedReDeployment } = require("../../Tools/evaluateHelper.js");
 
 const callBlockChain = async (
   network,
@@ -6,7 +6,7 @@ const callBlockChain = async (
   fromBlock,
   toBlock,
   switchoverBlock,
-  log
+  logger
 ) => {
   let logs = [];
   const incrementer = 2000;
@@ -50,7 +50,7 @@ const callBlockChain = async (
         : nextToBlock + incrementer + 1;
   } while (lastFromBlock < upperBlock);
 
-  await log(`jee whizz! the total logs returned are ${logs.length}`);
+  await logger(`jee whizz! the total logs returned are ${logs.length}`);
   return logs;
 };
 

@@ -1,12 +1,14 @@
 const initialiseNodeProvider = require("../crawlHistoricalData/initialiseNodeProvider");
 const returnLatestBlock = require("./returnLatestBlock");
+const reduceReturnedLogs = require("./reduceReturnedLogs");
 const {
-  evaluateNewPlayerScore,
-} = require("../crawlHistoricalData/evaluateHelper");
+  evaluateDifficultyInThisStatisticsEmit,
+  evaluateDecodedLevelAddress
+} = require("../../Tools/evaluateHelper");
 
-const callBlockChain = async (network, web3, log) => {
+const callBlockChain = async (network, web3, logger, upperBlock) => {
   let logs = [];
-  await log(
+  await logger(
     "Now, hold onto your horses! The " +
       network.name +
       " crawl has been initiated. Please wait some moments..."
@@ -50,28 +52,17 @@ const callBlockChain = async (network, web3, log) => {
           String(log.topics[3])
         );
 
-        const score = () => {
-          returnedScore = "";
-          if (
-            evaluateNewPlayerScore(topic2Array.time, topic3Array.number) > 0 &&
-            evaluateNewPlayerScore(topic2Array.time, topic3Array.number) < 100
-          ) {
-            returnedScore = evaluateNewPlayerScore(
-              topic2Array.time,
-              topic3Array.number
-            );
-          } else {
-            returnedScore = 0;
-          }
-          return returnedScore;
-        };
+        const additionalDifficultyFaced = await evaluateDifficultyInThisStatisticsEmit(network, log, initialiseNodeProvider, web3);
+
+        const decodedLevelAddress = await evaluateDecodedLevelAddress(network, log, initialiseNodeProvider, web3);
 
         try {
           let playerEntry = {
             player: topic1Array.player,
-            totalTimeTakenToCompleteLevels: topic2Array.time,
+            averageTimeTakenToCompleteALevel: topic2Array.time,
             totalNumberOfLevelsCompleted: topic3Array.number,
-            playerScore: score(),
+            levelFacedOnThisAttempt: decodedLevelAddress,
+            additionalDifficultyFaced,
             alias: "",
           };
           logs.push(playerEntry);
@@ -86,7 +77,9 @@ const callBlockChain = async (network, web3, log) => {
 
   console.log(`BOOM! The action added new entries from ${network.name}...`);
 
-  return logs;
+  const reducedLogs = reduceReturnedLogs(logs, network)
+
+  return reducedLogs;
 };
 
 module.exports = callBlockChain;

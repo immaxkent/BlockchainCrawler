@@ -17,9 +17,9 @@
     "API_Key": "MubeuNmWTa1QApG3toz-GNJccQOVkBeZ",
     "oldAddress": "0xe04f955e4Cf9858F8f8d60C09aBf16DF23D4672b",
     "newAddress": "0x73379d8B82Fda494ee59555f333DF7D44483fD58",
-    "fromBlock": 29190000,
+    "fromBlock": 28218131,
     "switchoverBlock": 29198563,
-    "toBlock": 29200000,
+    "toBlock": 30249171,
     "lastFrom": 30249172,
     "statisticsAddress": "0x96f08DD768b09cb6cD90591fED6A768F40C48a49"
   },

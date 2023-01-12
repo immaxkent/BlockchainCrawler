@@ -1,7 +1,7 @@
 const {
   evaluateCurrentSolveInstanceHex,
   returnCurrentLevel,
-} = require("./evaluateHelper.js");
+} = require("../../Tools/evaluateHelper.js");
 
 const filterLogs = async (
   logs,

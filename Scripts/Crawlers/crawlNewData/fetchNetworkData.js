@@ -1,21 +1,23 @@
 const fs = require("fs");
 const callBlockChain = require("./callBlockchain");
-const newPlayersDropPath = "../../../Boards/newPlayersBoard.json";
 const updateNetworkDetails = require("./updateNetworkDetails");
+const returnLatestBlock = require("./returnLatestBlock");
 
-const fetchNewData = async (network, web3, log) => {
-  let logs = await callBlockChain(network, web3, log);
+const fetchNewData = async (network, web3, logger, freshEntriesCrawlPath) => {
+  const upperBlock = await returnLatestBlock(network);
+  let logs = await callBlockChain(network, web3, logger, upperBlock);
 
-  const lastNewPlayersBoard = JSON.parse(fs.readFileSync(newPlayersDropPath));
-  const newPlayersBoard = lastNewPlayersBoard.concat(logs);
+  const lastFreshEntriesBoard = JSON.parse(fs.readFileSync(freshEntriesCrawlPath)) ? JSON.parse(fs.readFileSync(freshEntriesCrawlPath)) : [];
 
-  await log(
-    `Adding ${logs.length} player profiles to newPlayersBoard.json from ${network.name}`
+  const freshEntriesCrawl = lastFreshEntriesBoard.concat(logs);
+
+  await logger(
+    `Adding ${logs.length} emit profiles to freshEntriesCrawl from ${network.name}`
   );
 
-  fs.writeFileSync(newPlayersDropPath, JSON.stringify(newPlayersBoard));
+  fs.writeFileSync(freshEntriesCrawlPath, JSON.stringify(freshEntriesCrawl));
   if (process.env.ENVIRONMENT == "PROD") {
-    await updateNetworkDetails(network);
+    await updateNetworkDetails(network, upperBlock);
   }
 };
 

@@ -5,23 +5,22 @@ const initialiseNodeProvider = require("./initialiseNodeProvider.js");
 const compileAllPlayersBoard = require("./compilePlayersBoard.js");
 const writeLeaderBoard = require("./writeLeaderBoard.js");
 const consoleCustomiser = require("../../../utils/consoleCustomiser");
-const { log } = consoleCustomiser({ delay: 0, randomized: true });
+const { logger } = consoleCustomiser({ delay: 0, randomized: true });
 const Web3 = require("web3");
 const networks = require("../../../utils/networkDetails.json");
 const fs = require("fs");
 
 const generateAllBoards = async () => {
-  for (network of networks) {
-   
-      await generateNetworkBoard(network, log);
-    
-  }
+
+  // for (network of networks) {
+  //     await generateNetworkBoard(network, log);
+  // }
 
   compileAllPlayersBoard(networks);
-  await log(
-    "prised be! the players played the players game and got written on the #allPlayersBoard. right on!"
+  await logger(
+    "prais'ed be! the players played the players game and got written on the #allPlayersBoard. right on!"
   );
-  writeLeaderBoard(log);
+
 };
 
 const generateNetworkBoard = async (network, log) => {
@@ -30,7 +29,7 @@ const generateNetworkBoard = async (network, log) => {
   const switchoverBlock = network.switchoverBlock;
   const mappingData = require(`../../../Networks/${network.name}/levelsMapping.json`);
 
-  const nodeProvider = initialiseNodeProvider(network, log);
+  const nodeProvider = initialiseNodeProvider(network, logger);
 
   const blockchainLogs = await callBlockChain(
     network,
@@ -41,7 +40,7 @@ const generateNetworkBoard = async (network, log) => {
     log
   );
 
-  await log("Cwor blimey, " + blockchainLogs.length + " logs have been found");
+  await logger("Cwor blimey, " + blockchainLogs.length + " logs have been found");
 
   const web3 = new Web3();
 
@@ -57,18 +56,18 @@ const generateNetworkBoard = async (network, log) => {
   const filteredDataPath = `../../../Networks/${network.name}/filtered${network.name}Data.json`;
   fs.writeFileSync(filteredDataPath, JSON.stringify(filteredLogs));
 
-  await log("gracious me, " + filteredLogs.length + " logs have been written");
+  await logger("gracious me, " + filteredLogs.length + " logs have been written");
 
   const processedData = processFilteredData(filteredLogs);
 
-  await log(
+  await logger(
     "golly gosh, " + processedData.length + " logs have been processed"
   );
 
   const processedDataPath = `../../../Networks/${network.name}/${network.name}PlayersBoard.json`;
   fs.writeFileSync(processedDataPath, JSON.stringify(processedData));
 
-  await log(
+  await logger(
     "oh my, scores on the doors for " + network.name + " have been compiled"
   );
 };
