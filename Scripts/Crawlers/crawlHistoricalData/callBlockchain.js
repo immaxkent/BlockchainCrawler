@@ -20,8 +20,6 @@ const callBlockChain = async (
       nextToBlock = switchoverBlock;
     }
 
-    // console.log("lastFromBlock", lastFromBlock);
-    // console.log("nextToBlock", nextToBlock);
     const address = !evaluateIfWeHavePassedReDeployment(
       lastFromBlock,
       switchoverBlock
@@ -35,10 +33,6 @@ const callBlockChain = async (
       address,
       topics: [],
     });
-
-    
-       console.log(`crickets! ${logDump.length} logs found`);
-    
 
     logs = logs.concat(logDump);
 

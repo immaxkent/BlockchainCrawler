@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { Network, Alchemy, Utils } = require("alchemy-sdk");
-const fetchNewData = require("./fetchNetworkData.js");
+const crawlForFreshEntries = require("./crawlForFreshEntries.js");
 const updatePlayersBoard = require("./updatePlayersBoard.js");
 const consoleCustomiser = require("../../../utils/consoleCustomiser");
 const { logger } = consoleCustomiser({ delay: 50, randomized: true });
@@ -11,31 +11,33 @@ const networks = require("../../../utils/networkDetails.json");
 const freshEntriesCrawlPath = "../../../Boards/freshEntriesCrawl.json";
 
 
-const fetchNewDataAndUpdatePlayersBoard = async () => {
+const crawlForFreshEntriesAndUpdatePlayersBoard = async () => {
 
   fs.writeFileSync(freshEntriesCrawlPath, JSON.stringify([]));
 
   for (network of networks) {
-    await fetchNewData(network, web3, logger, freshEntriesCrawlPath);
+    await crawlForFreshEntries(network, web3, logger, freshEntriesCrawlPath);
     await logger(
       `Trumpets, glory and resounding success! ${network.name} was crawled like a 19th century garter!`
     );
   }
   await logger(
-    "Did you bring your towel, punk?! The networks were crawled and the leaderboard is about to be updated!!"
+    "Did you bring your towel, punk?! Fresh entries were crawled and the allPlayersBoard is ready to be updated!!"
   );
   
   updatePlayersBoard();
+
   await logger(
-    ".........deck the halls, ya filthy animal! The Leader Board has been.... UPDATED"
+    ".........deck the halls, ya filthy animal! The allPlayersBoard is now updated! Let's #writeLeaderBoard !"
   );
 
   // fetchAndAddAliases();
   // await logger(
   //   "get your magnifying glass out, Sherlock, because the leader board now belies.... the ALIASES!"
   // );
+
 };
 
-fetchNewDataAndUpdatePlayersBoard();
+crawlForFreshEntriesAndUpdatePlayersBoard();
 
-module.exports = fetchNewDataAndUpdatePlayersBoard;
+module.exports = crawlForFreshEntriesAndUpdatePlayersBoard;
