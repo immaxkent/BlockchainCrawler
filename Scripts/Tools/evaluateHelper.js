@@ -1,5 +1,6 @@
 const fs = require("fs");
 const networks = require("../../utils/networkDetails.json");
+const initialiseNodeProvider = require("../Crawlers/crawlHistoricalData/initialiseNodeProvider.js");
 
 const oldSolveInstanceHex =
   "0x9dfdf7e3e630f506a3dfe38cdbe34e196353364235df33e5a3b588488d9a1e78";
@@ -17,7 +18,7 @@ const evaluateCurrentSolveInstanceHex = (check, switchoverBlock) => {
   } else {
     solveInstanceHex = newSolveInstanceHex;
   }
-  // console.log(solveInstanceHex);
+
   return solveInstanceHex;
 };
 
@@ -62,21 +63,6 @@ const returnCurrentLevel = (
   return result;
 };
 
-// const evaluatePlayerScore = (
-//   totalTimeTakenToCompleteLevels,
-//   totalNumberOfLevelsCompleted
-// ) => {
-//   const totalNumberOfEthernautLevels = evaluateCurrentNumberOfEthernautLevels();
-//   let score = 0;
-//   if (totalNumberOfLevelsCompleted) {
-//     score =
-//       100 *
-//       ((0.9 * totalNumberOfLevelsCompleted) / totalNumberOfEthernautLevels +
-//         (15 * totalNumberOfLevelsCompleted) / totalTimeTakenToCompleteLevels);
-//   }
-//   return score;
-// };
-
 const evaluateHistoricalProfile = (processedData, network) =>
   processedData.map((profile) => {
     let levelCompletedCounter = 0;
@@ -94,24 +80,6 @@ const evaluateHistoricalProfile = (processedData, network) =>
     const averageTimeTakenToCompleteALevel = totalTimeTakenToCompleteLevels / levelCompletedCounter;
     const totalDifficultyFacedByPlayer = evaluateTotalDifficultyFaced(profile, network)
 
-
-
-    // const volumeCompletedParameter = 0.8; //approx. 80% of total attainable score
-    // const difficultyFacedParameter = 0.1; //approx 10% of total attainable score
-    // const timeTakenParameter = 15; // NOTA.BENE this value has been iterated BY HAND to represent the remaining 10% of total attainable score. The average block time for Ethereum was used as a starting value, and modified slightly thereafter to yield satisfactory score balance
-
-    // const totalDifficultyInEthernautGame = evaluateTotalDifficultyInEthernautGame()
-    // const totalNumberOfEthernautLevels = evaluateCurrentNumberOfEthernautLevels();
-
-    // let score = 0;
-    // if (levelCompletedCounter) {
-    //   score =
-    //     100 *
-    //     ((volumeCompletedParameter * levelCompletedCounter / totalNumberOfEthernautLevels) +
-    //       (difficultyFacedParameter * totalDifficultyFacedByPlayer / totalDifficultyInEthernautGame) +
-    //       (timeTakenParameter * levelCompletedCounter) / totalTimeTakenToCompleteLevels);
-    // }
-
     return {
       player: profile.player,
       averageTimeTakenToCompleteALevel,
@@ -122,47 +90,47 @@ const evaluateHistoricalProfile = (processedData, network) =>
     };
   });
 
-  const useScoreEquation = (averageTimeTakenToCompleteALevel, totalDifficultyFacedByPlayer, totalNumberOfLevelsCompleted) => {
+const useScoreEquation = (averageTimeTakenToCompleteALevel, totalDifficultyFacedByPlayer, totalNumberOfLevelsCompleted) => {
 
-    const volumeCompletedParameter = 0.8; //approx. 80% of total attainable score
-    const difficultyFacedParameter = 0.1; //approx 10% of total attainable score
-    const timeTakenParameter = 15; // NOTA.BENE this value has been iterated BY HAND to represent the remaining 10% of total attainable score. The average block time for Ethereum was used as a starting value, and modified slightly thereafter to yield satisfactory score balance
+  const volumeCompletedParameter = 0.8; //approx. 80% of total attainable score
+  const difficultyFacedParameter = 0.1; //approx 10% of total attainable score
+  const timeTakenParameter = 15; // NOTA.BENE this value has been iterated BY HAND to represent the remaining 10% of total attainable score. The average block time for Ethereum was used as a starting value, and modified slightly thereafter to yield satisfactory score balance
 
-    const totalDifficultyInEthernautGame = evaluateTotalDifficultyInEthernautGame()
-    const totalNumberOfEthernautLevels = evaluateCurrentNumberOfEthernautLevels();
+  const totalDifficultyInEthernautGame = evaluateTotalDifficultyInEthernautGame()
+  const totalNumberOfEthernautLevels = evaluateCurrentNumberOfEthernautLevels();
 
 
 
-    let score = 0;
-    if (totalNumberOfLevelsCompleted) {
-      score =
-        100 *
-        ((volumeCompletedParameter * totalNumberOfLevelsCompleted / totalNumberOfEthernautLevels) +
-          (difficultyFacedParameter * totalDifficultyFacedByPlayer / totalDifficultyInEthernautGame) +
-          (timeTakenParameter / averageTimeTakenToCompleteALevel));
-    }
-
+  let score = 0;
+  if (totalNumberOfLevelsCompleted) {
+    score =
+      100 *
+      ((volumeCompletedParameter * totalNumberOfLevelsCompleted / totalNumberOfEthernautLevels) +
+        (difficultyFacedParameter * totalDifficultyFacedByPlayer / totalDifficultyInEthernautGame) +
+        (timeTakenParameter / averageTimeTakenToCompleteALevel));
   }
+
+}
 /////////////////////////////////////////////////////////////////////////////////
 //ensure these 3 score related euqations are consistent
 /////////////////////////////////////////////////////////////////////////////////
-  const reCalculateScores = (board) => {
+const reCalculateScores = (board) => {
 
-    // const unfilteredLeaderBoardPath = "../../Boards/unfilteredLeaderBoard.json";
+  // const unfilteredLeaderBoardPath = "../../Boards/unfilteredLeaderBoard.json";
 
-    const boardWithScores = board.map((player) => {
+  const boardWithScores = board.map((player) => {
 
-      const score = useScoreEquation(player.averageTimeTakenToCompleteALevels, player.totalNumberOfLevelsCompleted, player.totalDifficultyFaced);
-      return {
-        ...player,
-        playerScore: score,
-      };
-    })
+    const score = useScoreEquation(player.averageTimeTakenToCompleteALevels, player.totalNumberOfLevelsCompleted, player.totalDifficultyFaced);
+    return {
+      ...player,
+      playerScore: score,
+    };
+  })
 
-    return boardWithScores;
+  return boardWithScores;
 
-    // fs.writeFileSync(unfilteredLeaderBoardPath, JSON.stringify(boardWithScores, null, 2));
-  }
+  // fs.writeFileSync(unfilteredLeaderBoardPath, JSON.stringify(boardWithScores, null, 2));
+}
 
 const evaluateNewPlayerScore = (
   averageTimeTakenToCompleteALevel,
@@ -187,98 +155,153 @@ const evaluateCurrentNumberOfEthernautLevels = () => {
 
 const evaluateTotalDifficultyInEthernautGame = () => {
   const difficultyMap = require("../../utils/ethernautLevels.json"); //this represent gameData.json in the main repo
-  const totalDifficulty = 0;
+  let totalDifficulty = 0;
   difficultyMap.forEach((level) => {
-    totalDifficulty += level.difficulty;
-  })
+    totalDifficulty += parseInt(level.difficulty);
+  });
+  console.log(totalDifficulty)
   return totalDifficulty
 }
 
 const evaluateTotalDifficultyFaced = (playerProfile, network) => {
   playerLevelsArray = playerProfile.levels;
-  let difficultyCount = 0;
-  const difficultyMap = require(`../../../Networks/${network.name}/difficultyMap${network.name}.json`);
 
-  playerLevelsArray.forEach((level) => {
-    const thisDifficultyProfile = difficultyMap.find(
-      (matchingLevel) =>
-        level.address == matchingLevel.address
-    );
-    difficultyCount += thisDifficultyProfile[difficulty];
+  let difficultyCount = 0;
+
+  const difficultyMap = require(`../../Networks/${network.name}/difficultyMap${network.name}.json`);
+
+  playerLevelsArray.forEach((game) => {
+
+
+    if (game.isCompleted == true) { 
+
+
+      const thisDifficultyProfile = difficultyMap.find(
+        (matchingProfile) => {
+          if (matchingProfile.address == game.levelAddress) return matchingProfile;
+        }
+      );
+
+    
+  
+      difficultyCount += parseInt(thisDifficultyProfile.difficulty);
+
+    }
+
   });
+
+  //console.log(difficultyCount)
 
   return difficultyCount;
 
 };
 
-const evaluateDifficultyInThisStatisticsEmit = (network, log, initialiseNodeProvider, web3) => {
+///////////////////////////////////////////////////////////////////////////////////////////
+//here, we write a function to call the blockchain using the 
+//txHash to find the emit from the Ethernaut contract
+//where the level address is stored. This will allow us to
+//determine the difficulty of the level that was just completed
 
-  ///////////////////////////////////////////////////////////////////////////////////////////
-  //here, we write a function to call the blockchain using the 
-  //txHash to find the emit from the Ethernaut contract
-  //where the level address is stored. This will allow us to
-  //determine the difficulty of the level that was just completed
-  
-  // const evaluateDecodedLevelAddress = async (network, log, initialiseNodeProvider, web3) => {
-  //   const nodeProvider = initialiseNodeProvider(network, log);
-  //   const levelAddress = "";
+// const evaluateDecodedLevelAddress = async (network, log, initialiseNodeProvider, web3) => {
+//   const nodeProvider = initialiseNodeProvider(network, log);
+//   const levelAddress = "";
 
-  //   try {
-  //     let block = await nodeProvider.getBlock(log.blockNumber);
-  //     const logFromEthernaut = await nodeProvider.getLogs({
-  //       fromBlock: block,
-  //       toBlock: block,
-  //       address: network.newAddress,
-  //       topics: [newSolveInstanceHex],
-  //     });
-      
-  //     let txn = await nodeProvider.getTransaction(logFromEthernaut.transactionHash);
-  //     let input = txn.data;
-  //     let input_data = "0x" + input.slice(10);
-  
-  //     levelAddress = web3.eth.abi.decodeParameter(
-  //       "address",
-  //       String(input_data)
-  //     );
-  //   } catch (error) {console.log(error)}
+//   try {
+//     let block = await nodeProvider.getBlock(log.blockNumber);
+//     const logFromEthernaut = await nodeProvider.getLogs({
+//       fromBlock: block,
+//       toBlock: block,
+//       address: network.newAddress,
+//       topics: [newSolveInstanceHex],
+//     });
 
-  //   return levelAddress
-  // };
+//     let txn = await nodeProvider.getTransaction(logFromEthernaut.transactionHash);
+//     let input = txn.data;
+//     let input_data = "0x" + input.slice(10);
 
-  const decodedAddress = evaluateDecodedLevelAddress()
+//     levelAddress = web3.eth.abi.decodeParameter(
+//       "address",
+//       String(input_data)
+//     );
+//   } catch (error) {console.log(error)}
 
-  const difficultyMap = require(`../../../Networks/${network.name}/difficultyMap${network.name}.json`);
+//   return levelAddress
+// };
 
-  const thisDifficultyProfile = difficultyMap.find(
+
+const evaluateDifficultyInThisStatisticsEmit = async (network, log, web3, nodeProvider) => {
+
+//const evaluateDifficultyAndLevelInThisStatisticsEmit = async (network, log, web3, nodeProvider) => {
+
+
+  const decodedAddress = await evaluateDecodedLevelAddress(network, log, web3, nodeProvider)
+  console.log("--------------------- decoded address is " + decodedAddress)
+  console.log("blockHash is " + log.blockHash)
+
+
+  const difficultyMap = require(`../../Networks/${network.name}/difficultyMap${network.name}.json`);
+
+  const thisDifficultyProfileIndex = difficultyMap.findIndex(
     (matchingLevel) =>
-    decodedAddress == matchingLevel.address
+      decodedAddress == matchingLevel.address
   );
-  return thisDifficultyProfile[difficulty];
+
+  console.log("difficulty profile index is " + thisDifficultyProfileIndex);
+  console.log("difficulty faced here was " + difficultyMap[thisDifficultyProfileIndex].difficulty)
+  console.log("level name here is " + difficultyMap[thisDifficultyProfileIndex].name)
+
+
+
+  return difficultyMap[thisDifficultyProfileIndex].difficulty;
 
 }
 
-const evaluateDecodedLevelAddress = async (network, log, initialiseNodeProvider, web3) => {
-  const nodeProvider = initialiseNodeProvider(network, log);
-  const levelAddress = "";
+const evaluateDecodedLevelAddress = async (network, log, web3, nodeProvider) => {
+ 
+  let levelAddress = "";
 
   try {
-    let block = await nodeProvider.getBlock(log.blockNumber);
-    const logFromEthernaut = await nodeProvider.getLogs({
+    let block = log.blockNumber;
+    
+
+    const logsFromEthernaut = await nodeProvider.getLogs({
       fromBlock: block,
       toBlock: block,
       address: network.newAddress,
       topics: [newSolveInstanceHex],
     });
-    
-    let txn = await nodeProvider.getTransaction(logFromEthernaut.transactionHash);
-    let input = txn.data;
-    let input_data = "0x" + input.slice(10);
 
-    levelAddress = web3.eth.abi.decodeParameter(
-      "address",
-      String(input_data)
-    );
-  } catch (error) {console.log(error)}
+
+
+    let txn = await nodeProvider.getTransaction(String(log.transactionHash));
+    let fromPlayer = String(txn.from)
+
+
+    const playerTopicArray = [{ type: "address", name: "player" }];
+    const levelTopicArray = [{ type: "address", name: "level" }];
+
+    for (log of logsFromEthernaut) {
+
+      const playerArray = web3.eth.abi.decodeParameters(
+        playerTopicArray,
+        String(log.topics[1])
+      );
+
+      if (playerArray.player == fromPlayer) {
+
+        let levelArray = web3.eth.abi.decodeParameters(
+          levelTopicArray,
+          String(log.topics[3])
+        );
+
+        levelAddress = levelArray.level;
+      }
+
+    }
+
+  } catch (error) { console.log(error) }
+
+
 
   return levelAddress
 };
@@ -292,7 +315,7 @@ const evaluateIfThisPlayerHasAlreadyCompletedThisLevel = (player, levelAddress, 
     const indexOfExistingPlayer = networkBoard.findIndex((player) => player.address == address);
     const existingEntry = networkBoard[indexOfExistingPlayer];
     const existingEntryLevelsArray = existingEntry.levels;
-  
+
     existingEntryLevelsArray.forEach((level) => {
       if (level.address == levelAddress) {
         evaluator = true

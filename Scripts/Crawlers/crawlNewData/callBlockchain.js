@@ -16,7 +16,7 @@ const callBlockChain = async (network, web3, logger, upperBlock) => {
 
   const nodeProvider = initialiseNodeProvider(network);
   const incrementer = 2000;
-  const upperBlock = await returnLatestBlock(network);
+  
   let lastFromBlock = network.lastFrom;
   let nextToBlock = network.lastFrom + incrementer;
 
@@ -32,7 +32,7 @@ const callBlockChain = async (network, web3, logger, upperBlock) => {
 
     if (logDump) {
       for (log of logDump) {
-        console.log(log);
+
         let dataArray1 = [{ type: "address", name: "player" }];
         let dataArray2 = [{ type: "uint256", name: "time" }];
         let dataArray3 = [{ type: "uint256", name: "number" }];
@@ -52,9 +52,16 @@ const callBlockChain = async (network, web3, logger, upperBlock) => {
           String(log.topics[3])
         );
 
-        const additionalDifficultyFaced = await evaluateDifficultyInThisStatisticsEmit(network, log, initialiseNodeProvider, web3);
+        // const txn = await nodeProvider.getTransaction(String(log.transactionHash));
+        // console.log(txn)
 
-        const decodedLevelAddress = await evaluateDecodedLevelAddress(network, log, initialiseNodeProvider, web3);
+        //const difficultyAndLevelFacedObject = await evaluateDifficultyAndLevelInThisStatisticsEmit(network, log, web3, nodeProvider);
+
+        
+
+        const additionalDifficultyFaced = await evaluateDifficultyInThisStatisticsEmit(network, log, web3, nodeProvider);
+
+        const decodedLevelAddress = await evaluateDecodedLevelAddress(network, log, web3, nodeProvider);
 
         try {
           let playerEntry = {

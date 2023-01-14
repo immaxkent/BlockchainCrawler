@@ -3,7 +3,6 @@ const filterLogs = require("./filterLogs.js");
 const processFilteredData = require("./processFilteredData.js");
 const initialiseNodeProvider = require("./initialiseNodeProvider.js");
 const compileAllPlayersBoard = require("./compilePlayersBoard.js");
-const writeLeaderBoard = require("./writeLeaderBoard.js");
 const consoleCustomiser = require("../../../utils/consoleCustomiser");
 const { logger } = consoleCustomiser({ delay: 0, randomized: true });
 const Web3 = require("web3");
@@ -16,7 +15,7 @@ const generateAllBoards = async () => {
   //     await generateNetworkBoard(network, log);
   // }
 
-  compileAllPlayersBoard(networks);
+  compileAllPlayersBoard(networks, logger);
   await logger(
     "prais'ed be! the players played the players game and got written on the #allPlayersBoard. right on!"
   );

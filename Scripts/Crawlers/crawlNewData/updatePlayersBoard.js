@@ -1,12 +1,14 @@
 const fs = require("fs");
-const allPlayersBoardPath = `../../../Boards/allPlayersBoard.json`;
+const allPlayersBoard = require("../../../Boards/allPlayersBoard.json");
 const freshEntriesCrawl = require("../../../Boards/freshEntriesCrawl.json");
 const testBoardPath = "../../../Boards/testBoard.json";
 
 const updatePlayersBoard = () => {
 
+  console.log(allPlayersBoard)
+
+  
   freshEntriesCrawl.forEach((entry) => {
-    const allPlayersBoard = JSON.parse(fs.readFileSync(allPlayersBoardPath))
     const index = allPlayersBoard.findIndex((p) => p.player === entry.player);
     if (index !== -1) {
       allPlayersBoard[index].totalDifficultyFaced += entry.totalDifficultyFaced;
