@@ -97,7 +97,7 @@ const processFilteredData = (filteredData) => {
     }
   });
 
-  return processedDataWithTotals;
+  return processedData;
 };
 
 module.exports = processFilteredData;

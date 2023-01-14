@@ -1,11 +1,12 @@
-const { evaluateIfWeHavePassedReDeployment } = require("./evaluateHelper.js");
+const { evaluateIfWeHavePassedReDeployment } = require("../../Tools/evaluateHelper.js");
 
 const callBlockChain = async (
   network,
   nodeProvider,
   fromBlock,
   toBlock,
-  switchoverBlock
+  switchoverBlock,
+  logger
 ) => {
   let logs = [];
   const incrementer = 2000;
@@ -19,8 +20,8 @@ const callBlockChain = async (
       nextToBlock = switchoverBlock;
     }
 
-    console.log("lastFromBlock", lastFromBlock);
-    console.log("nextToBlock", nextToBlock);
+    // console.log("lastFromBlock", lastFromBlock);
+    // console.log("nextToBlock", nextToBlock);
     const address = !evaluateIfWeHavePassedReDeployment(
       lastFromBlock,
       switchoverBlock
@@ -35,7 +36,10 @@ const callBlockChain = async (
       topics: [],
     });
 
-    console.log("found", logDump.length, "logs");
+    
+       console.log(`crickets! ${logDump.length} logs found`);
+    
+
     logs = logs.concat(logDump);
 
     lastFromBlock = nextToBlock + 1;
@@ -46,7 +50,7 @@ const callBlockChain = async (
         : nextToBlock + incrementer + 1;
   } while (lastFromBlock < upperBlock);
 
-  console.log("returning logs", logs.length);
+  await logger(`jee whizz! the total logs returned are ${logs.length}`);
   return logs;
 };
 

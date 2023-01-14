@@ -1,7 +1,7 @@
 const {
   evaluateCurrentSolveInstanceHex,
   returnCurrentLevel,
-} = require("./evaluateHelper.js");
+} = require("../../Tools/evaluateHelper.js");
 
 const filterLogs = async (
   logs,
@@ -20,7 +20,10 @@ const filterLogs = async (
         player: String(txn.from),
         eventType:
           String(log.topics[0]) ===
-          evaluateCurrentSolveInstanceHex(fromBlock, switchoverBlock)
+          evaluateCurrentSolveInstanceHex(
+            /*fromBlock*/ log.blockNumber,
+            switchoverBlock
+          )
             ? "LevelCompleted"
             : "InstanceCreated",
         blockNumber: log.blockNumber,
@@ -34,7 +37,7 @@ const filterLogs = async (
           mappingDataPath
         ),
       };
-      console.log("filteredLog.level", filteredLog.level, log.blockNumber);
+      // console.log("filteredLog.level", filteredLog.level, log.blockNumber);
       filteredData.push(filteredLog);
     } catch (error) {
       console.log(error);
