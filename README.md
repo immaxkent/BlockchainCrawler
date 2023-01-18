@@ -2,13 +2,9 @@
 
 A simple trawler, crawler, and general miscrient for finding, decoding and writing datas from logs on Ethereum chains running official versions of Open Zeppelin's Ethernaut.
 
-Completed using Alchemy.
+Adaptable with some small-ish tub of elbow greease, and completed using Alchemy/Infura.
 
-To use, run
-
-`npm init`
-
-and then
+To ensure project is initialised & correct dependancies are installed
 
 `npm install alchemy-sdk`
 
@@ -24,23 +20,25 @@ and then
 
 This code has been uploaded **filled with majestic data points**, but can be ran from scratch if need be.
 
-Here's how that process would go:
+Here's the process that needs to be taken **if starting from scratch**.:
 
-1.  Change the API keys in the file `./utils/networkDetails.json` to include _your API keys_ for **Alchemy** and in `01_crawlHistoricalData.js` for **Infura** respectively.
+- run `yarn leaderboard:oldCrawler` successfully, writing the network-by-network `${network.name}PlayersBoard`'s
 
-2.  Run `index.js` script under `blockScraper/Scripts/crawlHistoricalData` to collate all old data from historial **Ethernaut** deployments/networks and write them to the global leader board.
+**If you're OZ**, it's crawled its crawl and populated historical data already, right up to a very recent block indeed. 
+Check it out in `/client/leaderboard/utils/networkDetails` > `"fromBlock"` for each network. 
 
-3.  From an automater or action, periodically run scripts `index.js` under `blockScraper/Scripts/crawlNewData` to enter new games from the relevant networks, add aliases to the global leader board and generate the complete leader board JSON.
+## All the cron job needs to do is trigger this right here:
 
-**NB.** _Be sure to initialise `allPlayersBoard.json` and `newPlayersBoard.js` with an empty array `[]` if modifying the scripts._
 
-**NB.** _Any automator/action triggers a crawl from the block defined as `lastFrom` under `utils/networkDetails` per network. At the end of each run, this `fromBlock` value is updated. As such, if testing, be sure to omit the `updateNetworkDetails` function until you are happy to leave the action running on whatever period. The `.yaml` file included in this repo runs twice a day_
+- run `yarn leaderboard:triggerNextCrawl` to populate each ${network.name}PlayersBoard with new entries & write the global leaderboard
 
-# BUGS
+...as often as you like. A draft of this `.yml` file is contained in the `/client/leaderboard` directory as `crondraft.yml`.
 
-Here's some things that needs to be changed from development in local to production deployment:
+**NB.** *_Be sure to initialise `allPlayersBoard.json` and `newPlayersBoard.js` with an empty array `[]` if starting from scratch.*
 
-- access to ethernautLevels / gamedata <mapLevels, >
-- access to each network's levels mapping <>
-- return of current number of ethernaut levels <crawlNewData, crawlHistoricalData>
-- incorporate 'recalculateScores' functionality
+**NB.** *_Any automator/action triggers a crawl from the block defined as `lastFrom` under `utils/networkDetails` per network. At the end of each run, this `fromBlock` value is updated. As such, if testing, be sure to omit the `updateNetworkDetails` function until you are happy to leave the action running on whatever period.*
+
+**NB** *_during a cron job action crawl, `try/catch` blocks are used to omit RPC errors/missing responses. These are **not tracked** in this PR, and subsequently, although rare, occaisionally data on chain will not reflect that as shown on the leaderboard.*
+
+
+
